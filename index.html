@@ -10,6 +10,7 @@
   html, body {
     width: 100%;
     margin: 0;
+    overflow: hidden; /* Prevent scrolling */
   }
 
   body {
@@ -17,21 +18,27 @@
     background:
       radial-gradient(circle at 12% 15%, rgba(255,255,255,.9) 0 3px, transparent 4px),
       radial-gradient(circle at 88% 76%, rgba(255,255,255,.85) 0 4px, transparent 5px),
-      linear-gradient(135deg, #b9f6ff 0%, #d9c7ff 43%, #ffd1ed 70%, #fff0a8 100%);
+      linear-gradient(135deg, #b9f6ff 0%, #62dcff 43%, #ff9f43 70%, #fff0a8 100%);
     color: #17234b;
-    min-height: 100dvh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
   }
 
   .page {
     position: relative;
     width: 100%;
-    min-height: 100dvh;
-    overflow-x: hidden;
+    height: 100%;
+    max-height: 100dvh;
+    overflow: hidden;
     isolation: isolate;
-    padding: clamp(20px, 4vh, 40px) 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
   /* Y2K decorative blobs */
@@ -45,15 +52,15 @@
   .blob.one {
     width: 30vw; height: 30vw;
     max-width: 390px; max-height: 390px;
-    left: -8vw; top: -5vw;
-    background: linear-gradient(145deg, #ff62b4, #ff9fdb);
+    left: -8vw; top: -8vw;
+    background: linear-gradient(145deg, #ff9f43, #ffb86c);
     box-shadow: inset -18px -18px 35px rgba(255,255,255,.35);
   }
   .blob.two {
     width: 27vw; height: 27vw;
     max-width: 340px; max-height: 340px;
-    right: -7vw; bottom: -5vw;
-    background: linear-gradient(145deg, #7c72ff, #62dcff);
+    right: -7vw; bottom: -8vw;
+    background: linear-gradient(145deg, #4facfe, #62dcff);
     box-shadow: inset 18px 18px 30px rgba(255,255,255,.35);
   }
 
@@ -78,9 +85,11 @@
   .content {
     width: min(1100px, 94vw);
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: clamp(20px, 4vw, 40px);
+    grid-template-columns: 260px 1fr;
+    gap: clamp(16px, 3vw, 32px);
     align-items: start;
+    max-height: 100%;
+    overflow: hidden;
   }
 
   .sticker {
@@ -91,18 +100,18 @@
     border: 3px solid #17234b;
     border-radius: 999px;
     background: #fff;
-    color: #ff4ca5;
-    font-size: clamp(12px, 1.3vw, 15px);
+    color: #ff9f43;
+    font-size: clamp(11px, 1.2vw, 14px);
     font-weight: 900;
     letter-spacing: .08em;
     box-shadow: 4px 4px 0 #17234b;
     transform: rotate(-2deg);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
 
   h1 {
     margin: 0 0 8px;
-    font-size: clamp(32px, 5vw, 56px);
+    font-size: clamp(28px, 4.5vw, 48px);
     line-height: .95;
     letter-spacing: -.04em;
     font-weight: 1000;
@@ -110,15 +119,15 @@
     color: #fff;
     -webkit-text-stroke: 2px #17234b;
     text-shadow:
-      4px 4px 0 #ff4ca5,
+      4px 4px 0 #ff9f43,
       8px 8px 0 rgba(23,35,75,.92);
   }
 
   .subtitle {
-    font-size: clamp(14px, 1.5vw, 18px);
+    font-size: clamp(13px, 1.4vw, 16px);
     font-weight: 800;
     color: #17234b;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     line-height: 1.3;
   }
 
@@ -127,25 +136,37 @@
     background: #fff;
     border: 3px solid #17234b;
     border-radius: 20px;
-    padding: 20px;
+    padding: 16px;
     box-shadow: 8px 8px 0 #17234b;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .panel h2 {
-    margin: 0 0 16px;
-    font-size: 18px;
+    margin: 0 0 12px;
+    font-size: 16px;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: .05em;
     color: #17234b;
     border-bottom: 3px solid #17234b;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
+    flex-shrink: 0;
   }
 
   /* Subjects */
+  .subjects-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .subjects-container::-webkit-scrollbar { width: 6px; }
+  .subjects-container::-webkit-scrollbar-thumb { background: #ff9f43; border-radius: 3px; }
+
   .subject {
-    padding: 12px 14px;
-    margin-bottom: 12px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
     border-radius: 12px;
     color: #17234b;
     font-weight: 900;
@@ -157,7 +178,7 @@
     gap: 10px;
     border: 2px solid #17234b;
     box-shadow: 4px 4px 0 #17234b;
-    font-size: 15px;
+    font-size: 14px;
   }
   .subject:active { cursor: grabbing; }
   .subject:hover { 
@@ -165,7 +186,7 @@
     box-shadow: 6px 6px 0 #17234b; 
   }
   .subject.dragging { opacity: 0.4; transform: rotate(3deg); }
-  .subject .icon { font-size: 20px; }
+  .subject .icon { font-size: 18px; }
 
   /* Subject specific gradients */
   .sub-english { background: linear-gradient(135deg, #f093fb, #f5576c); color: #fff; }
@@ -175,17 +196,28 @@
   .sub-russian { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
 
   /* Slots */
+  .slots-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    display: flex;
+    flex-direction: column;
+  }
+  .slots-container::-webkit-scrollbar { width: 6px; }
+  .slots-container::-webkit-scrollbar-thumb { background: #ff9f43; border-radius: 3px; }
+
   .slot {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
     background: #f0f4ff;
     border: 3px dashed #17234b;
     border-radius: 14px;
-    min-height: 60px;
+    min-height: 56px;
     transition: all 0.2s;
+    flex-shrink: 0;
   }
   .slot.over {
     background: #fff86a;
@@ -198,29 +230,29 @@
   }
 
   .slot-time {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 900;
     color: #17234b;
-    min-width: 72px;
+    min-width: 68px;
     text-align: center;
     background: #fff86a;
-    padding: 6px 4px;
+    padding: 5px 4px;
     border-radius: 8px;
     border: 2px solid #17234b;
     box-shadow: 2px 2px 0 #17234b;
   }
 
   .slot-num {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: #ff4ca5;
+    background: #ff9f43;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 900;
-    font-size: 14px;
+    font-size: 13px;
     border: 2px solid #17234b;
     flex-shrink: 0;
   }
@@ -234,51 +266,53 @@
     color: #8892b0; 
     font-style: italic; 
     font-weight: 700; 
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .slot .subject {
     margin: 0;
     flex: 1;
-    padding: 8px 12px;
-    font-size: 14px;
+    padding: 6px 10px;
+    font-size: 13px;
     box-shadow: 3px 3px 0 #17234b;
   }
 
   .remove-btn {
-    background: #ff4ca5;
+    background: #ff9f43;
     color: #fff;
     border: 2px solid #17234b;
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     cursor: pointer;
     font-weight: 900;
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.15s;
     box-shadow: 2px 2px 0 #17234b;
+    flex-shrink: 0;
   }
   .remove-btn:hover { transform: scale(1.15); }
 
   /* Controls */
   .controls {
-    margin-top: 24px;
+    margin-top: 16px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
+    flex-shrink: 0;
   }
 
   button.action {
-    padding: 12px 24px;
+    padding: 10px 20px;
     border: 3px solid #17234b;
     border-radius: 999px;
     font-weight: 900;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: .05em;
     transition: all 0.15s;
@@ -288,16 +322,16 @@
   .btn-check { 
     background: #8dff72; 
     color: #17234b;
-    box-shadow: 5px 5px 0 #17234b; 
+    box-shadow: 4px 4px 0 #17234b; 
   }
   .btn-reset { 
-    background: #ff9800; 
-    box-shadow: 5px 5px 0 #17234b; 
+    background: #ff9f43; 
+    box-shadow: 4px 4px 0 #17234b; 
   }
 
   button.action:hover:not(:disabled) { 
     transform: translate(-2px, -2px); 
-    box-shadow: 7px 7px 0 #17234b; 
+    box-shadow: 6px 6px 0 #17234b; 
   }
   button.action:active:not(:disabled) {
     transform: translate(3px, 3px);
@@ -306,16 +340,17 @@
 
   /* Messages */
   .message {
-    margin-top: 20px;
-    padding: 14px 18px;
+    margin-top: 16px;
+    padding: 12px 16px;
     border-radius: 12px;
     text-align: center;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 14px;
     border: 3px solid #17234b;
-    box-shadow: 5px 5px 0 rgba(23,35,75,.88);
+    box-shadow: 4px 4px 0 rgba(23,35,75,.88);
     transform: rotate(-1deg);
     min-height: 24px;
+    flex-shrink: 0;
   }
   .message.success { background: #d4edda; color: #155724; transform: rotate(1deg); }
   .message.error { background: #ffd1ed; color: #721c24; transform: rotate(-1deg); }
@@ -323,15 +358,17 @@
 
   /* Responsive */
   @media (max-width: 800px) {
+    body { overflow-y: auto; height: auto; min-height: 100dvh; justify-content: flex-start; padding: 12px; }
+    .page { height: auto; max-height: none; overflow: visible; }
     .content {
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 16px;
     }
     .panel {
       box-shadow: 6px 6px 0 #17234b;
     }
-    h1 { text-align: center; }
-    .sticker { margin: 0 auto 16px; }
+    h1 { text-align: center; font-size: 32px; }
+    .sticker { margin: 0 auto 12px; }
     .subtitle { text-align: center; }
   }
 </style>
@@ -359,14 +396,14 @@
       
       <div class="panel">
         <h2>📚 Subjects</h2>
-        <div id="subjectsList"></div>
+        <div class="subjects-container" id="subjectsList"></div>
       </div>
     </div>
 
     <!-- Right Panel: Schedule -->
     <div class="panel">
       <h2>📅 Today's Schedule</h2>
-      <div id="slotsList"></div>
+      <div class="slots-container" id="slotsList"></div>
 
       <div class="controls">
         <button class="action btn-check" onclick="checkSchedule()">✓ Check</button>
